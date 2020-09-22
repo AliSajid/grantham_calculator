@@ -1,11 +1,10 @@
 #
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
+# This application tries to present an interactive way to calculate Grantham Scores (Grantham, 1974) given
+# two Amino Acid Sequences
 #
-# Find out more about building applications with Shiny here:
+# The Grantham Scores are calculated by using the Grantham Substitution Matrix (https://en.wikipedia.org/wiki/Amino_acid_replacement#Grantham's_distance) and addding the scores.
 #
-#    http://shiny.rstudio.com/
-#
+
 
 library(shiny)
 
@@ -15,7 +14,7 @@ ui <- fluidPage(
     # Application title
     titlePanel("Old Faithful Geyser Data"),
 
-    # Sidebar with a slider input for number of bins 
+    # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
             sliderInput("bins",
@@ -45,5 +44,5 @@ server <- function(input, output) {
     })
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
