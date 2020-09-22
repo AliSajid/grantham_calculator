@@ -9,18 +9,20 @@ library(shiny)
 library(dplyr)
 library(readr)
 library(tidyr)
+library(glue)
+
+aa_map <- read_csv("src/amino_acid_codon_map.csv")
+g_scores <- read_csv("src/grantham_scores.csv")
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-  output$distPlot <- renderPlot({
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  output$grantham <- renderText({
+    score <- g_scores %>%
+      filter(FIRST == input$first_aa,
+             SECOND == input$second_aa) %>%
+      pull(SCORE)
 
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+    return(glue("Grantham Score for substituting {input$first_aa} by {input$second_aa} is {score}"))
   })
 }
-
-# Run the application
