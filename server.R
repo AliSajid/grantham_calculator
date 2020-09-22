@@ -2,7 +2,7 @@
 # This application tries to present an interactive way to calculate Grantham Scores (Grantham, 1974) given
 # two Amino Acid Sequences
 #
-# The Grantham Scores are calculated by using the Grantham Substitution Matrix (https://en.wikipedia.org/wiki/Amino_acid_replacement#Grantham's_distance) and addding the scores.
+# The Grantham Scores are calculated by using the Grantham Substitution Matrix (https://en.wikipedia.org/wiki/Amino_acid_replacement#Grantham's_distance) and adding the scores.
 #
 
 library(shiny)
