@@ -35,21 +35,59 @@ ui <- fluidPage(
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      selectInput(
-        inputId = "first_aa",
-        choices = sort(unique(aa_map$TRIPLET)),
-        label = "Original Amino Acid"
+      radioButtons(
+        inputId = "input_type",
+        label = "Select the Type of Data Input",
+        choices = c("Pairwise", "Amino Acid Sequence", "Nucleotide Sequence"),
+        selected = "Pairwise"
       ),
-      selectInput(
-        inputId = "second_aa",
-        choices = sort(unique(aa_map$TRIPLET)),
-        label = "Substituted Amino Acid"
-      )
+      conditionalPanel("input.input_type == 'Pairwise'",
+                       selectInput(
+                         inputId = "first_aa",
+                         choices = sort(unique(aa_map$TRIPLET)),
+                         label = "Original Amino Acid"
+                       ),
+                       selectInput(
+                         inputId = "second_aa",
+                         choices = sort(unique(aa_map$TRIPLET)),
+                         label = "Substituted Amino Acid"
+                       )),
+      conditionalPanel("input.input_type == 'Amino Acid Sequence'",
+                       textInput(
+                         inputId = "first_seq",
+                         label = "Original Amino Acid Sequence",
+                         value = "A"
+                       ),
+                       textInput(
+                         inputId = "second_seq",
+                         label = "Substituted Amino Acid Sequence",
+                         value = "A"
+                       )),
+      conditionalPanel("input.input_type == 'Nucleotide Sequence'",
+                       textInput(
+                         inputId = "first_dna",
+                         label = "Original Nucleotide Sequence",
+                         value = "ATG"
+                       ),
+                       textInput(
+                         inputId = "second_dna",
+                         label = "Substituted Nucleotide Sequence",
+                         value = "ATG"
+                       )),
+      actionButton(inputId = "submit_button",
+                   label = "Calculate",
+                   class = "btn-success"),
+
     ),
 
     # Show a plot of the generated distribution
     mainPanel(
-      textOutput("grantham")
+      conditionalPanel("input.input_type == 'Pairwise'",
+                       textOutput("grantham")),
+      conditionalPanel("input.input_type == 'Amino Acid Sequence'",
+                       textOutput("grantham_aa_seq")),
+      conditionalPanel("input.input_type == 'Nucleotide Sequence'",
+                       textOutput("grantham_dna_seq"))
     )
   )
 )
